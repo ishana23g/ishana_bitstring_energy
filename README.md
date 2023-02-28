@@ -7,6 +7,12 @@ bitstring_energy
 
 A Python package for visualizing energy states from a bitstring
 
+This repository is currently under development. To do a development install, download this repository and type
+
+`pip install -e .`
+
+in the repository directory.
+
 ### Copyright
 
 Copyright (c) 2023, Ishana Garuda
