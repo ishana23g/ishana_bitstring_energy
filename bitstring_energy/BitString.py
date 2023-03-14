@@ -7,16 +7,16 @@ class BitString:
     Simple class to implement a string of bits
     """
 
-    def __init__(self, string: list):
+    def __init__(self, list_of_bits: list):
         """
-        Saves the string of bits as a list of 0s and 1s
+        Saves the list of bits that are either 0s and 1s
 
         Parameters
         ----------
-        string : list
+        list_of_bits : list
             list of 0s and 1s
         """
-        self.string = string
+        self.list_of_bits = list_of_bits
 
     def __str__(self) -> str:
         """
@@ -28,8 +28,8 @@ class BitString:
             string of bits
         """
         bitString = ""
-        for i in range(len(self.string)):
-            bitString += str(self.string[i])
+        for i in range(len(self.list_of_bits)):
+            bitString += str(self.list_of_bits[i])
         return bitString
 
     def __len__(self) -> int:
@@ -41,7 +41,7 @@ class BitString:
         length : int
             number of bits in the bitstring
         """
-        return len(self.string)
+        return len(self.list_of_bits)
 
     def flip(self, index: int) -> None:
         """
@@ -52,16 +52,16 @@ class BitString:
         index : int
             index of the bit to flip
         """
-        if self.string[index] == 0:
-            self.string[index] = 1
+        if self.list_of_bits[index] == 0:
+            self.list_of_bits[index] = 1
         else:
-            self.string[index] = 0
+            self.list_of_bits[index] = 0
 
-    def set_string(self, string: list) -> None:
+    def set_string(self, list_of_bits: list) -> None:
         """
         Sets the bitstring to the given list of bits
         """
-        self.string = string
+        self.list_of_bits = list_of_bits
 
     def on(self) -> int:
         """
@@ -72,7 +72,7 @@ class BitString:
         on : int
             number of '1's in the bitstring
         """
-        return np.sum(self.string)
+        return np.sum(self.list_of_bits)
 
     def off(self) -> int:
         """
@@ -83,7 +83,7 @@ class BitString:
         off : int
             number of '0's in the bitstring
         """
-        return len(self.string) - self.on()
+        return len(self.list_of_bits) - self.on()
 
     def int(self) -> int:
         """
@@ -95,9 +95,9 @@ class BitString:
             integer value of the bitstring
         """
         bit_to_int = 0
-        for (i, bit) in enumerate(self.string):
+        for (i, bit) in enumerate(self.list_of_bits):
             if bit == 1:
-                bit_to_int += 2 ** (len(self.string) - i - 1)
+                bit_to_int += 2 ** (len(self.list_of_bits) - i - 1)
         return bit_to_int
 
     def set_int(self, num: int, digits: int =None) -> None:
@@ -113,9 +113,9 @@ class BitString:
         """
         if digits is None:
             digits = int(math.log2(num)) + 1
-        self.string = [0] * digits
+        self.list_of_bits = [0] * digits
         for i in range(digits - 1, -1, -1):
-            self.string[i] = num % 2
+            self.list_of_bits[i] = num % 2
             num = num // 2
 
     def __eq__(self, __o: object) -> bool:
@@ -133,7 +133,7 @@ class BitString:
             True if the two bitstrings are equal, False otherwise
         """
         if isinstance(__o, BitString):
-            return self.string == __o.string
+            return self.list_of_bits == __o.list_of_bits
         return False
 
     def return_array(self) -> list:
@@ -145,4 +145,4 @@ class BitString:
         list
             list of '0's and '1's
         """
-        return self.string
+        return self.list_of_bits

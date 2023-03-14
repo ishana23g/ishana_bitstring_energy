@@ -56,13 +56,13 @@ def calculate_all_possible_energy(G: nx.Graph,
 
     Returns
     -------
-    (lowest, highest) : tuples
+    (lowest, highest) : tuple
         The lowest and highest energy states of the graph
         But if one or more of them are not requested, it will be `None` for that state
     """
     x_y_dict = dict() # Store the indices and energies in a dictionary
     num_nodes = G.number_of_nodes()
-    my_bs = BitString([0] * num_nodes)
+    current_bs = BitString([0] * num_nodes)
     min_bs = BitString([0] * num_nodes)
     max_bs = BitString([0] * num_nodes)
 
@@ -70,10 +70,10 @@ def calculate_all_possible_energy(G: nx.Graph,
     # y = []
 
     for b in range(0,  2**num_nodes+1):
-        my_bs.set_int(b, digits=num_nodes)
+        current_bs.set_int(b, digits=num_nodes)
         # x.append(b)
         # y.append(energy(my_bs, G))
-        x_y_dict[b] = energy(my_bs, G)
+        x_y_dict[b] = energy(current_bs, G)
 
     # Print out all the energies
     if give_graph:
@@ -81,16 +81,16 @@ def calculate_all_possible_energy(G: nx.Graph,
         plt.show()
 
     if give_lowest_state:
-        xmin = min(x_y_dict, key=x_y_dict.get)
-        emin = x_y_dict[xmin]
-        min_bs.set_int(xmin,digits=num_nodes)
-        print(f"Lowest energy {emin}: {min_bs}")
+        index_min = min(x_y_dict, key=x_y_dict.get)
+        energy_min = x_y_dict[index_min]
+        min_bs.set_int(index_min,digits=num_nodes)
+        print(f"Lowest energy {energy_min}: {min_bs}")
 
     if give_highest_state:
-        xmax = max(x_y_dict, key=x_y_dict.get)
-        emax = x_y_dict[xmax]
-        max_bs.set_int(xmax,digits=num_nodes)
-        print(f"Highest energy {emax}: {max_bs}")
+        index_max = max(x_y_dict, key=x_y_dict.get)
+        energy_max = x_y_dict[index_max]
+        max_bs.set_int(index_max,digits=num_nodes)
+        print(f"Highest energy {energy_max}: {max_bs}")
 
     if give_lowest_state and give_highest_state:
         return (min_bs, max_bs)
