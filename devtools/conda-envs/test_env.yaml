@@ -3,11 +3,17 @@ channels:
 
   - defaults
 dependencies:
-    # Base depends
+  # Base depends
   - python
   - pip
 
-    # Testing
+  # Package dependencies
+  - numpy
+  - matplotlib
+  - math
+  - networkx
+
+  # Testing
   - pytest
   - pytest-cov
 
