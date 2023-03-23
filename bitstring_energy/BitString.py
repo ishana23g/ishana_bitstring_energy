@@ -118,6 +118,7 @@ class BitString:
             self.list_of_bits[i] = num % 2
             num = num // 2
 
+
     def __eq__(self, __o: object) -> bool:
         """
         Checks if two bitstrings are equal
