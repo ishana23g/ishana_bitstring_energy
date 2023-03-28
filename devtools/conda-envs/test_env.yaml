@@ -10,7 +10,6 @@ dependencies:
   # Package dependencies
   - numpy
   - matplotlib
-  - math
   - networkx
 
   # Testing
@@ -20,4 +19,3 @@ dependencies:
   # Pip-only installs
   - pip:
     - codecov
-
