@@ -4,9 +4,9 @@ from .BitString import BitString as bs
 from .Energy import IsingHamiltonian as ham
 import numpy as np
 
-def metropolis_montecarlo(hamiltonian: ham, 
-                          configuration: bs, 
-                          T: int, nsweep: int, 
+def metropolis_montecarlo(hamiltonian: ham,
+                          configuration: bs,
+                          T: int, nsweep: int,
                           nburn: int) -> tuple:
     """
     This function performs the Metropolis Monte Carlo algorithm to sample the
@@ -30,6 +30,9 @@ def metropolis_montecarlo(hamiltonian: ham,
     tuple
         The energy, magnetization, energy squared, and magnetization squared
     """
+    for j in range(nburn):
+        configuration = metropolis_step(hamiltonian, configuration, T)
+
     E_array = np.zeros(nsweep)
     M_array = np.zeros(nsweep)
     EE_array = np.zeros(nsweep)
@@ -40,19 +43,19 @@ def metropolis_montecarlo(hamiltonian: ham,
     for i in range(1, nsweep):
         configuration = metropolis_step(hamiltonian, configuration, T)
         E, M = hamiltonian.compute_energy_and_mag(configuration, T)
-        
+
         # E_array[i] = E
         E_array[i]  = (E_array[i-1]*(i) + E)/(i+1)
         EE_array[i] = (EE_array[i-1]*(i) + E*E)/(i+1)
-        
+
         #M_array[i]  = M
         M_array[i]  = (M_array[i-1]*(i) + M)/(i+1)
         MM_array[i] = (MM_array[i-1]*(i) + M*M)/(i+1)
     return E_array, M_array, EE_array, MM_array
 
 
-def metropolis_step(hamiltonian: ham, 
-                    configuration: bs, 
+def metropolis_step(hamiltonian: ham,
+                    configuration: bs,
                     T: int,) -> bs:
     """
     Taking a single step forward in the Metropolis Monte Carlo algorithm
@@ -78,7 +81,7 @@ def metropolis_step(hamiltonian: ham,
     #     if configuration.config[i] == 1:
     #         configuration.flip(i)
     #     e_beta = hamiltonian.energy(configuration)
-        
+
     #     # compute the probability of flipping
     #     e_delta = np.exp (-(e_beta - e_alpha)/T)
     #     random_flip = np.random.rand()
@@ -89,7 +92,6 @@ def metropolis_step(hamiltonian: ham,
     # return configuration
 
     for site_i in range(configuration.n):
-
             delta_e = 0.0
             del_si = 2
             if configuration.config[site_i] == 1:
@@ -98,8 +100,8 @@ def metropolis_step(hamiltonian: ham,
             for j in hamiltonian.J[site_i]:
                 delta_e += (2.0*configuration.config[j[0]]-1.0) * j[1] * del_si
 
-            delta_e += hamiltonian.mu[site_i] * del_si 
-    
+            delta_e += hamiltonian.mu[site_i] * del_si
+
             accept = True
             if delta_e > 0.0:
                 rand_comp = np.random.random()
