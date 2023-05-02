@@ -1,30 +1,33 @@
 import math
 import numpy as np
+import random
 
 class BitString:
     """
     Simple class to implement a string of bits
     """
 
-    def __init__(self, config: np.array =None, N: int =None) -> None:
+    def __init__(self, N: int =None) -> None:
         """
         Saves the list of bits that are either 0s and 1s
 
         Parameters
         ----------
-        config : list
-            list of 0s and 1s
-        """
-        if (config == None and N == None):
-            raise ValueError("Either the bitstring or the number of spins must be defined")
-        elif (N != None and config == None):
-            self.n = N
-            config = np.zeros(N)
+        N : int
+            number of spins
+        
+        Raises
+        ------
+        AttributeError :
+            if neither the bitstring or the number of spins are defined
+        """        
+        if (N == None):
+            raise AttributeError("Must define the number of spins")
         else:
-            if (len(config) != N):
-                raise ValueError("The length of the bitstring does not match the number of spins")
-            self.n = len(config)
-            self.config = config
+            self.n = N
+            self.config = np.zeros(N, dtype=int)
+            self.n_dim = 2**self.n
+
 
     def __str__(self) -> str:
         """
@@ -47,6 +50,64 @@ class BitString:
             number of bits in the bitstring
         """
         return len(self.config)
+    
+    def __getitem__(self, index: int) -> int:
+        """
+        Returns the bit at the given index
+
+        Parameters
+        ----------
+        index : int
+            index of the bit to return
+
+        Returns
+        -------
+        bit : int
+            bit at the given index
+        """
+        return self.config[index]
+
+    def __setitem__(self, index: int, value: int) -> None:
+        """
+        Sets the bit at the given index
+
+        Parameters
+        ----------
+        index : int
+            index of the bit to set
+        value : int
+            value to set the bit to
+        
+        Raises
+        ------
+        ValueError :
+            if the value is not 0 or 1
+        """
+        value = int(value) 
+        if (value != 0 and value != 1):
+            raise ValueError("The value must be 0 or 1")
+        self.config[index] = value
+
+    def __eq__(self, __o: object) -> bool:
+        """
+        Checks if two bitstrings are equal
+        
+        Parameters
+        ----------
+        __o : object    
+            object to compare to
+        
+        Returns
+        -------
+        bool
+            True if the two bitstrings are equal, False otherwise
+        """
+        if isinstance(__o, BitString):
+            for i in range(self.n):
+                if (self[i] != __o[i]):
+                    return False
+            return True
+        return False
 
     def flip(self, index: int) -> None:
         """
@@ -57,22 +118,21 @@ class BitString:
         index : int
             index of the bit to flip
         """
-
         self.config[index] = 1 - self.config[index]
-
+    
     def set_string(self, config: np.array) -> None:
         """
         Sets the bitstring to the given list of bits
         """
         if (type(config) != np.ndarray):
-            config = np.array(config)
-        self.config = config
+            config = np.array(config, dtype=int)
+        self.config = np.array(config, dtype=int)
 
     def set_config(self, config: np.array) -> None:
         """
         call set_string
         """
-        self.set_string(config)
+        self.set_string(np.array(config, dtype=int))
 
     def on(self) -> int:
         """
@@ -110,7 +170,7 @@ class BitString:
             bit_to_int = (bit_to_int << 1) | int(digit)
         return bit_to_int
 
-    def set_int(self, num: int, digits: int =None) -> None:
+    def set_int_config(self, num: int, digits: int =None) -> None:
         """
         Sets the bitstring to the given integer value
         
@@ -122,30 +182,11 @@ class BitString:
             number of digits in the bitstring
         """
         if digits is None:
-            digits = int(math.log(num, 2)) + 1
+            digits = self.n
         # the bin(num) gives a string of the form '0b*****'
         # the [2:] removes the '0b' from the string
         # the zfill(digits) adds 0s to the front of the string to make it the correct length
-        self.string = np.array([int(digit) for digit in bin(num)[2:].zfill(digits)])
-
-
-    def __eq__(self, __o: object) -> bool:
-        """
-        Checks if two bitstrings are equal
-        
-        Parameters
-        ----------
-        __o : object    
-            object to compare to
-        
-        Returns
-        -------
-        bool
-            True if the two bitstrings are equal, False otherwise
-        """
-        if isinstance(__o, BitString):
-            return self.config == __o.config
-        return False
+        self.config = np.array([int(digit) for digit in bin(num)[2:].zfill(digits)], dtype=int)
 
     def return_array(self) -> np.array:
         """
@@ -157,3 +198,17 @@ class BitString:
             list of '0's and '1's
         """
         return self.config
+    
+    def initialize(self, M=0, verbose=0):
+        """
+        Initialize spin configuration with specified magnetization
+        
+        Parameters
+        ----------
+        M   : Int, default: 0
+            Total number of spin up sites 
+        """
+        self.config = np.zeros(self.n, dtype=int) 
+        random_list = random.sample(range(0, self.n), M)
+        for i in random_list:
+            self.config[i] = 1
