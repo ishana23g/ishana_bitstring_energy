@@ -5,7 +5,6 @@ dependencies:
   - python
   - pip
   - numpy
-  - sphinx-autoapi
 
   # Pip-only installs
   - pip:
