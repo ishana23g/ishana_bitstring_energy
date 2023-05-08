@@ -92,26 +92,26 @@ def metropolis_step(hamiltonian: ham,
     # return configuration
 
     for site_i in range(configuration.n):
-            delta_e = 0.0
-            del_si = 2
-            if configuration.config[site_i] == 1:
-                del_si = -2
+        delta_e = 0.0
+        del_si = 2
+        if configuration.config[site_i] == 1:
+            del_si = -2
 
-            for j in hamiltonian.J[site_i]:
-                delta_e += (2.0*configuration.config[j[0]]-1.0) * j[1] * del_si
+        for j in hamiltonian.J[site_i]:
+            delta_e += (2.0*configuration.config[j[0]]-1.0) * j[1] * del_si
 
-            delta_e += hamiltonian.mu[site_i] * del_si
+        delta_e += hamiltonian.mu[site_i] * del_si
 
-            accept = True
-            if delta_e > 0.0:
-                rand_comp = np.random.random()
-                if rand_comp > np.exp(-delta_e/T):
-                    accept = False
-            if accept:
-                if configuration.config[site_i] == 0:
-                    configuration.config[site_i] = 1
-                else:
-                    configuration.config[site_i] = 0
+        accept = True
+        if delta_e > 0.0:
+            rand_comp = np.random.random()
+            if rand_comp > np.exp(-delta_e/T):
+                accept = False
+        if accept:
+            if configuration.config[site_i] == 0:
+                configuration.config[site_i] = 1
+            else:
+                configuration.config[site_i] = 0
     return configuration
 
 

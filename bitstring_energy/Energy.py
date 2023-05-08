@@ -152,6 +152,7 @@ N
         Ei = self.energy(bs)
         Mi = np.sum(2*bs.config - 1)
         return (Ei, Mi)
+    
     # def calculate_all_possible_energy(self, G: nx.Graph, 
     #                                 give_lowest_state: bool = True, 
     #                                 give_highest_state: bool = False,
