@@ -1,9 +1,7 @@
 """Provide the primary functions."""
 
-import math
 import numpy as np
 import networkx as nx
-import matplotlib.pyplot as plt
 from .BitString import BitString
 
 
