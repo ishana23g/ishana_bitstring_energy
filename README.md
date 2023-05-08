@@ -1,8 +1,8 @@
 bitstring_energy
 ==============================
 [//]: # (Badges)
-[![GitHub Actions Build Status](https://github.com/REPLACE_WITH_OWNER_ACCOUNT/bitstring_energy/workflows/CI/badge.svg)](https://github.com/REPLACE_WITH_OWNER_ACCOUNT/bitstring_energy/actions?query=workflow%3ACI)
-[![codecov](https://codecov.io/gh/REPLACE_WITH_OWNER_ACCOUNT/bitstring_energy/branch/main/graph/badge.svg)](https://codecov.io/gh/REPLACE_WITH_OWNER_ACCOUNT/bitstring_energy/branch/main)
+[![GitHub Actions Build Status](https://github.com/ishana23g/bitstring_energy/workflows/CI/badge.svg)](https://github.com/ishana23g/bitstring_energy/actions?query=workflow%3ACI)
+[![codecov](https://codecov.io/gh/ishana23g/bitstring_energy/branch/main/graph/badge.svg)](https://codecov.io/gh/ishana23g/bitstring_energy/branch/main)
 
 
 A Python package for visualizing energy states from a bitstring
