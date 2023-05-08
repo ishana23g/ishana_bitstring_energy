@@ -5,8 +5,7 @@ dependencies:
   - python
   - pip
   - numpy
-  - networkx
 
   # Pip-only installs
   - pip:
-
+    - networkx

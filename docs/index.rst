@@ -5,6 +5,8 @@
 
 Welcome to bitstring_energy's documentation!
 =========================================================
+Bitstring Energy is a python package for calculating the energy of a bitstring.
+It is designed to calculate the energy of a bitstring in a quantum annealing problem.
 
 .. toctree::
    :maxdepth: 2
